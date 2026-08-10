@@ -18,7 +18,14 @@ server.on('connection', (ws) => {
         if (data.type === 'command') {
             const target = clients[data.targetId];
             if (target) {
-                target.send(JSON.stringify({ type: 'command', command: data.command }));
+                target.send(JSON.stringify({ type: 'command', command: data.command, from: clientId }));
+            }
+        }
+
+        if (data.type === 'response') {
+            const target = clients[data.targetId];
+            if (target) {
+                target.send(JSON.stringify({ type: 'response', data: data.data, from: clientId }));
             }
         }
     });
