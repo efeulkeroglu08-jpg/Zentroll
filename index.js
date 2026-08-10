@@ -1,4 +1,3 @@
-
 const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: process.env.PORT || 8080 });
 
@@ -22,7 +21,7 @@ server.on('connection', (ws) => {
             return;
         }
 
-        if (data.type === 'command' || data.type === 'response' || data.type === 'webrtc') {
+        if (data.type === 'command' || data.type === 'response' || data.type === 'webrtc' || data.type === 'chat') {
             const target = clients[data.targetId];
             if (target) {
                 data.from = clientId;
