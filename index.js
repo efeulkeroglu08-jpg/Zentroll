@@ -1,9 +1,20 @@
 const WebSocket = require('ws');
-const server = new WebSocket.Server({ port: process.env.PORT || 8080 });
+const express = require('express');
+const path = require('path');
+const app = express();
+
+// Express sunucu
+const PORT = process.env.PORT || 8080;
+const httpServer = app.listen(PORT, () => {
+    console.log('HTTP Sunucu ' + PORT + ' portunda çalışıyor...');
+});
+
+// WebSocket sunucu aynı porta bağla
+const wss = new WebSocket.Server({ server: httpServer });
 
 let clients = {};
 
-server.on('connection', (ws) => {
+wss.on('connection', (ws) => {
     let clientId = null;
 
     ws.on('message', (message) => {
@@ -44,4 +55,27 @@ server.on('connection', (ws) => {
     });
 });
 
-console.log('Sunucu calisiyor...');
+// APK indirme endpoint'i
+app.get('/download/apk', (req, res) => {
+    try {
+        const apkPath = path.join(__dirname, 'app-debug.apk');
+        res.download(apkPath, 'Zentroll.apk', (err) => {
+            if (err) {
+                console.log('İndirme hatası: ' + err);
+                res.status(500).send('İndirme başarısız');
+            }
+        });
+    } catch (e) {
+        res.status(404).send('APK bulunamadı');
+    }
+});
+
+app.get('/api/version', (req, res) => {
+    res.json({
+        version: 2,
+        changelog: "Yenilikler ve iyileştirmeler yapıldı.",
+        downloadUrl: "https://zentroll.onrender.com/download/apk"
+    });
+});
+
+console.log('Sunucu çalışıyor...');
