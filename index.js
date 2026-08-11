@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const express = require('express');
 const path = require('path');
+
 const app = express();
 
 // Express sunucu
@@ -70,6 +71,7 @@ app.get('/download/apk', (req, res) => {
     }
 });
 
+// Version bilgisi endpoint'i
 app.get('/api/version', (req, res) => {
     res.json({
         version: 2,
