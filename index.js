@@ -76,7 +76,7 @@ app.get('/api/version', (req, res) => {
     res.json({
         version: 2,
         changelog: "Yenilikler ve iyileştirmeler yapıldı.",
-        downloadUrl: "https://zentroll.onrender.com/download/apk"
+        downloadUrl: "https://github.com/efeulkeroglu08-jpg/Zentroll/releases/download/V.2.0/app-debug.apk"
     });
 });
 
