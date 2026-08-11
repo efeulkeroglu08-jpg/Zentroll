@@ -56,6 +56,15 @@ wss.on('connection', (ws) => {
     });
 });
 
+// Version bilgisi endpoint'i
+app.get('/api/version', (req, res) => {
+    res.json({
+        version: 2,
+        changelog: "Yenilikler ve iyileştirmeler yapıldı.",
+        downloadUrl: "https://github.com/efeulkeroglu08-jpg/Zentroll/releases/download/V.2.0/app-debug.apk"
+    });
+});
+
 // APK indirme endpoint'i
 app.get('/download/apk', (req, res) => {
     try {
@@ -69,15 +78,6 @@ app.get('/download/apk', (req, res) => {
     } catch (e) {
         res.status(404).send('APK bulunamadı');
     }
-});
-
-// Version bilgisi endpoint'i
-app.get('/api/version', (req, res) => {
-    res.json({
-        version: 2,
-        changelog: "Yenilikler ve iyileştirmeler yapıldı.",
-        downloadUrl: "https://github.com/efeulkeroglu08-jpg/Zentroll/releases/download/V.2.0/app-debug.apk"
-    });
 });
 
 console.log('Sunucu çalışıyor...');
